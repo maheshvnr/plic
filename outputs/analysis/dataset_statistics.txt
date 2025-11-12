@@ -1,0 +1,56 @@
+================================================================================
+PLASTIC CLASSIFICATION DATASET - STATISTICAL ANALYSIS REPORT
+================================================================================
+
+DATASET OVERVIEW
+--------------------------------------------------------------------------------
+Total Classes: 7
+Classes: HDPE, LDPA, Other, PET, PP, PS, PVC
+Total Images: 1996
+Training Images: 1408
+Validation Images: 387
+Test Images: 201
+
+SPLIT RATIOS
+--------------------------------------------------------------------------------
+Training: 70.5%
+Validation: 19.4%
+Test: 10.1%
+
+PER-CLASS STATISTICS
+--------------------------------------------------------------------------------
+Class      Train    Val      Test     Total    % of Total  
+--------------------------------------------------------------------------------
+HDPE       208      58       30       296           14.83%
+LDPA       210      60       30       300           15.03%
+Other      195      54       26       275           13.78%
+PET        208      56       30       294           14.73%
+PP         209      59       30       298           14.93%
+PS         185      48       29       262           13.13%
+PVC        193      52       26       271           13.58%
+
+================================================================================
+CLASS BALANCE ANALYSIS
+================================================================================
+
+Maximum images in a class: 300 (LDPA)
+Minimum images in a class: 262 (PS)
+Mean images per class: 285.14
+Standard deviation: 15.39
+Class balance ratio: 0.87
+
+✓ Dataset is WELL-BALANCED (low variation between classes)
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+1. Use data augmentation to increase training diversity
+2. Apply normalization (scale pixel values to 0-1 range)
+3. Consider using class weights if imbalance is significant
+4. Monitor validation accuracy to prevent overfitting
+5. Use dropout layers in CNN to improve generalization
+
+================================================================================
+Report generated on: November 10, 2025
+================================================================================

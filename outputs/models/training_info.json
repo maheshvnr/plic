@@ -1,0 +1,35 @@
+{
+    "model_config": {
+        "image_size": 224,
+        "batch_size": 16,
+        "epochs_trained": 62,
+        "learning_rate": 0.001,
+        "total_parameters": 1443879
+    },
+    "dataset": {
+        "train_samples": 1270,
+        "val_samples": 354,
+        "test_samples": 187,
+        "num_classes": 7,
+        "class_names": [
+            "HDPE",
+            "LDPA",
+            "Other",
+            "PET",
+            "PP",
+            "PS",
+            "PVC"
+        ]
+    },
+    "results": {
+        "train_accuracy": 0.5440945029258728,
+        "val_accuracy": 0.46327683329582214,
+        "test_accuracy": 0.48128342628479004,
+        "test_precision": 0.6263736486434937,
+        "test_recall": 0.30481284856796265,
+        "test_f1_score": 0.41007196019848496,
+        "best_val_accuracy": 0.505649745464325
+    },
+    "training_time": "1:45:23.344829",
+    "timestamp": "2025-11-11 22:07:51"
+}
