@@ -1,0 +1,19 @@
+# Core Deep Learning Libraries
+tensorflow
+keras
+
+# Data Processing and Analysis
+numpy
+pandas
+
+# Image Processing
+Pillow
+
+# Visualization
+matplotlib
+seaborn
+
+# Machine Learning Utilities
+scikit-learn
+
+# Note: tkinter comes built-in with Python, no need to install

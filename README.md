@@ -2,7 +2,7 @@
 
 An AI-powered system that uses Convolutional Neural Networks (CNNs) to detect and classify plastic types from images. This project helps recycling facilities identify different plastic materials automatically, improve sorting efficiency, and promote sustainable waste management.
 
-## 📊 Project Timeline
+##  Project Timeline
 
 ### Week 1: Dataset Collection
 - ✅ Collected comprehensive plastic classification dataset from Kaggle
@@ -47,8 +47,9 @@ An AI-powered system that uses Convolutional Neural Networks (CNNs) to detect an
 ```
 week1/
 ├── plastic_classification.py      # Main training script
+├── plastic_classifier_gui.py      # GUI application
 ├── plastic_classification.ipynb   # Jupyter notebook (same content)
-├── Project_Problem_Statement.txt  # Detailed problem statement
+├── requirements.txt                # Python dependencies
 ├── README.md                       # This file
 ├── dataset/                        # Plastic classification dataset
 │   └── Plastic Classification(1)/

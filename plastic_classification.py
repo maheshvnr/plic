@@ -36,10 +36,10 @@ OUTPUT_DIR = BASE_DIR / "outputs"
 (OUTPUT_DIR / "predictions").mkdir(parents=True, exist_ok=True)
 
 # Model hyperparameters (optimized for best accuracy)
-IMG_SIZE = 224  # Increased for better feature extraction
-BATCH_SIZE = 16  # Smaller batch for better generalization
-EPOCHS = 100
-LEARNING_RATE = 0.001
+IMG_SIZE = 128  # Reduced to prevent overfitting
+BATCH_SIZE = 32  # Good balance
+EPOCHS = 100  # Sufficient with early stopping
+LEARNING_RATE = 0.001  # Higher for better convergence
 CLASS_NAMES = ['HDPE', 'LDPA', 'Other', 'PET', 'PP', 'PS', 'PVC']
 
 print("="*80)
@@ -55,14 +55,14 @@ print("="*80)
 # ====================== DATA LOADING ======================
 print("\n[1/6] Loading and preprocessing data...")
 
-# Aggressive data augmentation for maximum generalization
+# Strong data augmentation to prevent overfitting
 train_datagen = ImageDataGenerator(
     rescale=1./255,
     rotation_range=40,
-    width_shift_range=0.3,
-    height_shift_range=0.3,
-    shear_range=0.3,
-    zoom_range=0.3,
+    width_shift_range=0.25,
+    height_shift_range=0.25,
+    shear_range=0.25,
+    zoom_range=0.25,
     horizontal_flip=True,
     vertical_flip=True,
     fill_mode='nearest',
@@ -101,59 +101,54 @@ print(f"✓ Validation samples: {val_gen.samples}")
 print(f"✓ Test samples: {test_gen.samples}")
 
 # ====================== MODEL BUILDING ======================
-print("\n[2/6] Building optimized CNN model...")
+print("\n[2/6] Building optimized CNN model (balanced for small dataset)...")
 
 model = keras.Sequential([
     # Input
     layers.Input(shape=(IMG_SIZE, IMG_SIZE, 3)),
     
     # Block 1
-    layers.Conv2D(32, 3, padding='same'),
+    layers.Conv2D(32, 3, padding='same', kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
-    layers.Conv2D(32, 3, padding='same'),
+    layers.Conv2D(32, 3, padding='same', kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
     layers.MaxPooling2D(2),
-    layers.Dropout(0.25),
+    layers.Dropout(0.3),
     
     # Block 2
-    layers.Conv2D(64, 3, padding='same'),
+    layers.Conv2D(64, 3, padding='same', kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
-    layers.Conv2D(64, 3, padding='same'),
+    layers.Conv2D(64, 3, padding='same', kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
     layers.MaxPooling2D(2),
-    layers.Dropout(0.25),
+    layers.Dropout(0.3),
     
     # Block 3
-    layers.Conv2D(128, 3, padding='same'),
+    layers.Conv2D(128, 3, padding='same', kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
-    layers.Conv2D(128, 3, padding='same'),
+    layers.Conv2D(128, 3, padding='same', kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
     layers.MaxPooling2D(2),
-    layers.Dropout(0.25),
+    layers.Dropout(0.4),
     
     # Block 4
-    layers.Conv2D(256, 3, padding='same'),
+    layers.Conv2D(256, 3, padding='same', kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
-    layers.Conv2D(256, 3, padding='same'),
-    layers.BatchNormalization(),
-    layers.Activation('relu'),
-    layers.MaxPooling2D(2),
-    layers.Dropout(0.25),
-    
-    # Dense layers
     layers.GlobalAveragePooling2D(),
-    layers.Dense(512),
+    
+    # Dense layers with heavy regularization
+    layers.Dense(256, kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
     layers.Dropout(0.5),
-    layers.Dense(256),
+    layers.Dense(128, kernel_regularizer=keras.regularizers.l2(0.001)),
     layers.BatchNormalization(),
     layers.Activation('relu'),
     layers.Dropout(0.5),
@@ -175,7 +170,8 @@ callbacks = [
         monitor='val_accuracy',
         patience=15,
         restore_best_weights=True,
-        verbose=1
+        verbose=1,
+        min_delta=0.005
     ),
     ModelCheckpoint(
         OUTPUT_DIR / 'models' / 'best_model.keras',

@@ -1,10 +1,10 @@
 {
     "model_config": {
-        "image_size": 224,
-        "batch_size": 16,
-        "epochs_trained": 62,
+        "image_size": 128,
+        "batch_size": 32,
+        "epochs_trained": 75,
         "learning_rate": 0.001,
-        "total_parameters": 1443879
+        "total_parameters": 686119
     },
     "dataset": {
         "train_samples": 1270,
@@ -22,14 +22,14 @@
         ]
     },
     "results": {
-        "train_accuracy": 0.5440945029258728,
-        "val_accuracy": 0.46327683329582214,
-        "test_accuracy": 0.48128342628479004,
-        "test_precision": 0.6263736486434937,
-        "test_recall": 0.30481284856796265,
-        "test_f1_score": 0.41007196019848496,
-        "best_val_accuracy": 0.505649745464325
+        "train_accuracy": 0.6102362275123596,
+        "val_accuracy": 0.505649745464325,
+        "test_accuracy": 0.47593581676483154,
+        "test_precision": 0.5416666865348816,
+        "test_recall": 0.27807486057281494,
+        "test_f1_score": 0.36749116564013096,
+        "best_val_accuracy": 0.5225988626480103
     },
-    "training_time": "1:45:23.344829",
-    "timestamp": "2025-11-11 22:07:51"
+    "training_time": "0:42:27.690616",
+    "timestamp": "2025-11-14 17:02:49"
 }
